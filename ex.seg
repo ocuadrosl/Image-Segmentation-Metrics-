@@ -1,0 +1,14 @@
+format ascii cr
+date Thu Feb 12 12:25:54 2015
+image images/berkeley/25098.jpg
+user Oscar
+width 321
+height 481
+segments 2
+gray 0
+invert 0
+flipflop 0
+data
+0 0 0 100
+1 1 0 100
+
