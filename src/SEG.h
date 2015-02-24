@@ -44,6 +44,9 @@ class SEG
 		reg_t &operator[](int __index);
 		int size();
 
+		int width();
+		int height();
+
 	private:
 		string _format; // {*ascii|binary} {*cr|map}
 		string _date; // <date string>
@@ -59,6 +62,17 @@ class SEG
 		vector<reg_t> _segments;
 
 };
+
+int SEG::width()
+{
+	return _width;
+}
+
+int SEG::height()
+{
+	return _height;
+}
+
 
 int SEG::size()
 {

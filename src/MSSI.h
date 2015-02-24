@@ -39,8 +39,9 @@ class MSSI: public Metric
 	private:
 		matrix_t _intersections;
 		void fill_matrix(SEG* __seg_1, SEG* __seg_2);
-		void find_largest_intersections();
 		void fill_largest(int __i, int __j);
+
+		float summatory();
 
 };
 
@@ -61,9 +62,11 @@ void MSSI::print_matrix()
 
 void MSSI::fill_largest(int __i, int __j)
 {
-	float &col = _intersections[_intersections.size() - 1][__j];
+	float &col = _intersections[_intersections.size() - 2][__j];
+	float &col_index = _intersections[_intersections.size() - 1][__j];
 
-	float &row = _intersections[__i][_intersections[0].size() - 1];
+	float &row = _intersections[__i][_intersections[0].size() - 2];
+	float &row_index = _intersections[__i][_intersections[0].size() - 1];
 
 	float value = 0;
 
@@ -72,29 +75,62 @@ void MSSI::fill_largest(int __i, int __j)
 	if (value > row && value > col)
 	{
 		col = value;
+		col_index = __i;
 		row = value;
+		row_index = __j;
 	}
+
+}
+
+float MSSI::summatory()
+{
+	int col_size = _intersections[0].size();
+	int col_index = 0;
+
+	float sum = 0.f;
+
+	for (unsigned i = 0; i < _intersections.size() - 2; i++)
+	{
+		col_index = _intersections[i][col_size - 1];
+
+		if (_intersections[i][col_size - 2] != _intersections[_intersections.size() - 2][col_index]) // to resolve false positives
+		{
+			//cout << "false positive " << _intersections[i][col_size - 2] << " " << i << " " << col_index << endl;
+			_intersections[i][col_size - 1] = -1;
+			_intersections[i][col_size - 2] = -1;
+
+			for (int j = 0; j < col_size - 2; j++)
+			{
+				fill_largest(i, j);
+			}
+
+		}
+
+		sum += _intersections[i][col_size - 2];
+
+	}
+
+	return sum;
+
 }
 
 void MSSI::fill_matrix(SEG* __seg_1, SEG* __seg_2)
 {
 
-	_intersections.resize(__seg_1->size() + 1); // position[size] to store the largest element
+	_intersections.resize(__seg_1->size() + 2); // position[size] to store the largest element
 
-	for (int i = 0; i < __seg_1->size() + 1; i++)
+	for (int i = 0; i < __seg_1->size() + 2; i++)
 	{
-		_intersections[i].resize(__seg_2->size() + 1, 0.f);
+		_intersections[i].resize(__seg_2->size() + 2, -1.f);
 	}
 
 	for (int i = 0; i < __seg_1->size(); i++)
 	{
 		for (int j = 0; j < __seg_2->size(); j++)
 		{
-
 			_intersections[i][j] = I((*__seg_1)[i], (*__seg_2)[j]);
 
 			fill_largest(i, j);
-
 		}
 
 	}
@@ -104,9 +140,15 @@ void MSSI::fill_matrix(SEG* __seg_1, SEG* __seg_2)
 float MSSI::operator()(SEG* __seg_1, SEG* __seg_2)
 {
 
-	fill_matrix(__seg_1, __seg_2);
+	if (__seg_1->size() > __seg_2->size())
+		fill_matrix(__seg_2, __seg_1);
+	else
+		fill_matrix(__seg_1, __seg_2);
 
-	print_matrix();
+
+	return 1 - (summatory() / float(__seg_1->width() * __seg_1->height()));
+
+	//print_matrix();
 
 }
 

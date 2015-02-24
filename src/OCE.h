@@ -20,7 +20,7 @@ typedef vector<vector<int> > reg_t; //seg row
 /*
  *  An evaluation metric for image segmentation of multiple objects
  *	Mark Polak - 2009
- *	Implementation: Oscar
+ *	Implemented by: Oscar
  *
  * */
 
@@ -32,7 +32,7 @@ class OCE: public Metric
 	private:
 
 		int bar_delta(int __input); //bar delta: see the paper (equation 6)
-		float E(SEG* __seg_1, SEG* __seg_2); //error equation 6
+		float E(SEG* __seg_1, SEG* __seg_2); //error function: equation 6
 
 };
 

@@ -2,8 +2,8 @@ format ascii cr
 date Thu Feb 12 12:25:54 2015
 image images/berkeley/25098.jpg
 user Oscar
-width 321
-height 481
+width 10
+height 10
 segments 1
 gray 0
 invert 0

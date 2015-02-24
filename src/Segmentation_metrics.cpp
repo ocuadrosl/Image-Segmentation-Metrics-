@@ -24,8 +24,8 @@ void foo(Metric* __m, SEG* __seg_1, SEG* __seg_2)
 int main()
 {
 	SEG seg_1, seg_2;
-	seg_1.read("frutas_2.seg");
-	seg_2.read("frutas_1.seg");
+	seg_1.read("frutas_1.seg");
+	seg_2.read("frutas_2.seg");
 
 	//seg_2.print();
 
@@ -34,6 +34,7 @@ int main()
 
 
 	foo(new MSSI(), &seg_1, &seg_2);
+	foo(new OCE(), &seg_1, &seg_2);
 
 	return 0;
 }
