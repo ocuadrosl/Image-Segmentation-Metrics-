@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Segmentation_metrics/src/SEGmetric.h&apos; to &apos;Metric.h&apos;" description="Rename resource &apos;SEGmetric.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/SEGmetric.h" name="Metric.h" stamp="1423852336268" updateReferences="true"/>
+</session>
