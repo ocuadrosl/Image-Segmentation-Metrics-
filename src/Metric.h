@@ -9,10 +9,18 @@
 #define METRIC_H_
 
 typedef vector<vector<int> > reg_t; //seg row
+/*
+ * to seg files
+ * oscar
+ * */
 
 class Metric
 {
 	public:
+		virtual float operator()(SEG* __seg_1, SEG* __seg_2)=0;
+		virtual ~Metric(){};
+
+	protected:
 		Metric()
 		{
 		}

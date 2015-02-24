@@ -10,7 +10,16 @@
 #include "SEG.h"
 
 #include "OCE.h"
+#include "MSSI.h"
+#include "Metric.h"
 using namespace std;
+
+
+void foo(Metric* __m, SEG* __seg_1, SEG* __seg_2)
+{
+	cout<<(*__m)(__seg_1, __seg_2)<<endl;
+
+}
 
 int main()
 {
@@ -20,10 +29,11 @@ int main()
 
 	//seg_2.print();
 
+	//Metric *oce = new OCE();
+	MSSI mssi;
 
-	OCE oce;
 
-	cout <<  oce(&seg_1, &seg_2) << endl;
+	foo(new MSSI(), &seg_1, &seg_2);
 
 	return 0;
 }
