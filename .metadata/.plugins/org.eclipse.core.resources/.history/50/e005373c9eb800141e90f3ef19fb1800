@@ -1,0 +1,60 @@
+/*
+ * MSSI.h
+ *
+ *  Created on: 19/2/2015
+ *      Author: oscar
+ */
+
+#ifndef MSSI_H_
+#define MSSI_H_
+
+#include "SEG.h"
+#include "Metric.h"
+#include <vector>
+
+using namespace std;
+/*
+ * Métrica de similaridade para segmentação de imagens
+ * Oscar
+ *
+ *
+ */
+
+typedef vector<vector<float> > matrix_t;
+
+class MSSI: public Metric
+{
+	public:
+
+		MSSI()
+		{
+		}
+		;
+
+		float operator()(SEG* __seg_1, SEG* __seg_2);
+
+	private:
+		matrix_t _intersections;
+		void fill_matrix(SEG* __seg_1, SEG* __seg_2);
+
+};
+
+void MSSI::fill_matrix(SEG* __seg_1, SEG* __seg_2)
+{
+
+	for (unsigned i = 0; i < __seg_1->size(); i++)
+	{
+		for (unsigned j = 0; j < __seg_2->size(); j++)
+		{
+		}
+
+	}
+
+}
+
+float MSSI::operator()(SEG* __seg_1, SEG* __seg_2)
+{
+
+}
+
+#endif /* MSSI_H_ */
