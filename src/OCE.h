@@ -28,6 +28,7 @@ class OCE: public Metric
 {
 	public:
 		float compare(SEG* __seg_1, SEG* __seg_2);
+		//string metric_name();
 
 	private:
 

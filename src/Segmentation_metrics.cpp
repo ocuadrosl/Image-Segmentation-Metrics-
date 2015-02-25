@@ -12,27 +12,44 @@
 #include "OCE.h"
 #include "MSSI.h"
 #include "Metric.h"
+#include <sys/time.h>
+#include <ctime>
+
 using namespace std;
 
-void foo(Metric* __metric, SEG* __seg_1, SEG* __seg_2)
+void chrono(Metric* __metric, SEG* __seg_1, SEG* __seg_2)
 {
+	float result;
 
-	cout << __metric->compare(__seg_1, __seg_2) << endl;
+	double process_time;
+	timeval time;
+	gettimeofday(&time, NULL);
+	double t_0 = time.tv_sec + (time.tv_usec / 1000000.0);
+
+	result = __metric->compare(__seg_1, __seg_2);
+
+	gettimeofday(&time, NULL);
+	double t_1 = time.tv_sec + (time.tv_usec / 1000000.0);
+
+	process_time = t_1 - t_0;
+
+	cout << typeid(*__metric).name() << ": " << result << " time: " << process_time << endl;
+
 }
 
 int main()
 {
 	SEG seg_1, seg_2;
 	seg_1.read("seg/61086.seg_1102");
-	seg_2.read("seg/61086.seg_1130");
+	seg_2.read("seg/61086.seg_1102");
 
 	Metric *oce = new OCE();
 	MSSI * mssi = new MSSI();
 
-	mssi->penality(0.1);
+	mssi->penality(0);
 
-	foo(mssi, &seg_1, &seg_2);
-	foo(oce, &seg_1, &seg_2);
+	chrono(mssi, &seg_1, &seg_2);
+	chrono(oce, &seg_1, &seg_2);
 
 	return 0;
 }

@@ -17,8 +17,8 @@ typedef vector<vector<int> > reg_t; //seg row
 class Metric
 {
 	public:
-		//virtual float operator()(SEG* __seg_1, SEG* __seg_2)=0;
 		virtual float compare(SEG* __seg_1, SEG* __seg_2)=0;
+		//virtual string metric_name()=0;
 		virtual ~Metric()
 		{
 		}
