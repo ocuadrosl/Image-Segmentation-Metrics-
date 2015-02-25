@@ -17,14 +17,19 @@ typedef vector<vector<int> > reg_t; //seg row
 class Metric
 {
 	public:
-		virtual float operator()(SEG* __seg_1, SEG* __seg_2)=0;
-		virtual ~Metric(){};
+		//virtual float operator()(SEG* __seg_1, SEG* __seg_2)=0;
+		virtual float compare(SEG* __seg_1, SEG* __seg_2)=0;
+		virtual ~Metric()
+		{
+		}
+		;
 
-	protected:
 		Metric()
 		{
 		}
 		;
+
+	protected:
 
 		int I(reg_t __reg_1, reg_t __reg_2); //intersection between two regions
 		int U(reg_t __reg_1, reg_t __reg_2); //union between two regions

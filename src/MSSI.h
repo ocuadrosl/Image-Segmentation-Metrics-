@@ -27,23 +27,39 @@ class MSSI: public Metric
 {
 	public:
 
-		MSSI()
-		{
-		}
-		;
+		MSSI();
 
-		float operator()(SEG* __seg_1, SEG* __seg_2);
+		float compare(SEG* __seg_1, SEG* __seg_2);
 
 		void print_matrix();
 
+		void penality(float __penality);
+
 	private:
 		matrix_t _intersections;
+
+		vector<float> _over_segmentations; //to consider over segmentation
+		float _penalty; // to penalize over segmentation
+
 		void fill_matrix(SEG* __seg_1, SEG* __seg_2);
 		void fill_largest(int __i, int __j);
 
 		float summatory();
 
+		int _image_size;
+
 };
+
+MSSI::MSSI()
+{
+	_penalty = 0;
+
+}
+
+void MSSI::penality(float __penality)
+{
+	_penalty = __penality;
+}
 
 void MSSI::print_matrix()
 {
@@ -106,9 +122,11 @@ float MSSI::summatory()
 
 		}
 
-		sum += _intersections[i][col_size - 2];
+		sum += (_intersections[i][col_size - 2] * _over_segmentations[i]);
 
 	}
+
+	//print_matrix();
 
 	return sum;
 
@@ -118,6 +136,7 @@ void MSSI::fill_matrix(SEG* __seg_1, SEG* __seg_2)
 {
 
 	_intersections.resize(__seg_1->size() + 2); // position[size] to store the largest element
+	_over_segmentations.resize(__seg_1->size(), 0);
 
 	for (int i = 0; i < __seg_1->size() + 2; i++)
 	{
@@ -130,25 +149,38 @@ void MSSI::fill_matrix(SEG* __seg_1, SEG* __seg_2)
 		{
 			_intersections[i][j] = I((*__seg_1)[i], (*__seg_2)[j]);
 
+			if (_intersections[i][j] > 0)
+			{
+				_over_segmentations[i] = _over_segmentations[i] + _penalty;
+			}
+
 			fill_largest(i, j);
 		}
+
+		if (_over_segmentations[i] < 1)
+		{
+			_over_segmentations[i] = 1.f;
+		}
+
+		_over_segmentations[i] = 1.f / _over_segmentations[i];
+
+		//cout << _over_segmentations[i] << endl;
 
 	}
 
 }
 
-float MSSI::operator()(SEG* __seg_1, SEG* __seg_2)
+float MSSI::compare(SEG* __seg_1, SEG* __seg_2)
 {
+
+	_image_size = __seg_1->width() * __seg_1->height();
 
 	if (__seg_1->size() > __seg_2->size())
 		fill_matrix(__seg_2, __seg_1);
 	else
 		fill_matrix(__seg_1, __seg_2);
 
-
-	return 1 - (summatory() / float(__seg_1->width() * __seg_1->height()));
-
-	//print_matrix();
+	return (summatory() / (float) _image_size);
 
 }
 

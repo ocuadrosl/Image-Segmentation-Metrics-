@@ -27,7 +27,7 @@ typedef vector<vector<int> > reg_t; //seg row
 class OCE: public Metric
 {
 	public:
-		float operator()(SEG* __seg_1, SEG* __seg_2);
+		float compare(SEG* __seg_1, SEG* __seg_2);
 
 	private:
 
@@ -36,7 +36,7 @@ class OCE: public Metric
 
 };
 
-float OCE::operator ()(SEG* __seg_1, SEG* __seg_2)
+float OCE::compare(SEG* __seg_1, SEG* __seg_2)
 {
 	return Util::min(E(__seg_1, __seg_2), E(__seg_2, __seg_1));
 }
@@ -89,7 +89,7 @@ float OCE::E(SEG* __seg_1, SEG* __seg_2)
 
 	}
 
-	return error;
+	return 1 - error;
 }
 
 #endif /* OCE_H_ */

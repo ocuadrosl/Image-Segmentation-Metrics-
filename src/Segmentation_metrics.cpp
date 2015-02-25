@@ -14,27 +14,25 @@
 #include "Metric.h"
 using namespace std;
 
-
-void foo(Metric* __m, SEG* __seg_1, SEG* __seg_2)
+void foo(Metric* __metric, SEG* __seg_1, SEG* __seg_2)
 {
-	cout<<(*__m)(__seg_1, __seg_2)<<endl;
 
+	cout << __metric->compare(__seg_1, __seg_2) << endl;
 }
 
 int main()
 {
 	SEG seg_1, seg_2;
-	seg_1.read("frutas_1.seg");
-	seg_2.read("frutas_2.seg");
+	seg_1.read("seg/61086.seg_1102");
+	seg_2.read("seg/61086.seg_1130");
 
-	//seg_2.print();
+	Metric *oce = new OCE();
+	MSSI * mssi = new MSSI();
 
-	//Metric *oce = new OCE();
-	MSSI mssi;
+	mssi->penality(0.1);
 
-
-	foo(new MSSI(), &seg_1, &seg_2);
-	foo(new OCE(), &seg_1, &seg_2);
+	foo(mssi, &seg_1, &seg_2);
+	foo(oce, &seg_1, &seg_2);
 
 	return 0;
 }
