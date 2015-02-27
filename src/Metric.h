@@ -17,8 +17,8 @@ typedef vector<vector<int> > reg_t; //seg row
 class Metric
 {
 	public:
-		virtual float compare(SEG* __seg_1, SEG* __seg_2)=0;
-		//virtual string metric_name()=0;
+		virtual float compare(SEG* __seg_1, SEG* __seg_2)=0; // return 1 to equal segs and 0 to very different
+
 		virtual ~Metric()
 		{
 		}
@@ -33,7 +33,7 @@ class Metric
 
 		int I(reg_t __reg_1, reg_t __reg_2); //intersection between two regions
 		int U(reg_t __reg_1, reg_t __reg_2); //union between two regions
-		int size(reg_t __reg); //the number of pixes in __reg
+		int n_pixels(reg_t __reg); //the number of pixes in __reg
 		float jaccard(reg_t __reg_1, reg_t __reg_2);
 
 };
@@ -47,7 +47,7 @@ float Metric::jaccard(reg_t __reg_1, reg_t __reg_2)
 
 }
 
-int Metric::size(reg_t __reg)
+int Metric::n_pixels(reg_t __reg)
 {
 	int size = 0;
 	for (unsigned i = 0; i < __reg.size(); i++)
@@ -90,7 +90,7 @@ int Metric::I(vector<vector<int> > __reg_1, vector<vector<int> > __reg_2)
 
 int Metric::U(vector<vector<int> > __reg_1, vector<vector<int> > __reg_2)
 {
-	return (size(__reg_1) + size(__reg_2)) - I(__reg_1, __reg_2);
+	return (n_pixels(__reg_1) + n_pixels(__reg_2)) - I(__reg_1, __reg_2);
 }
 
 #endif /* METRIC_H_ */
