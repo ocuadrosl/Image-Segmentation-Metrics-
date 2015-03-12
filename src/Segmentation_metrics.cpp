@@ -41,15 +41,19 @@ void chrono(Metric* __metric, SEG* __seg_1, SEG* __seg_2)
 
 int main()
 {
-	SEG seg_1, seg_2;
+	SEG seg_1, seg_2, seg_3;
 	seg_1.read("seg/frutas_1.seg");
 	seg_2.read("seg/frutas_2.seg");
+	seg_3.read("seg/61086.seg_1102");
 
 	Metric *oce = new OCE();
 	MSSI * mssi = new MSSI();
 	Metric* arbelaez = new Arbelaez();
 
-	mssi->penality(0);
+	mssi->penality(0.1);
+
+	//cout << mssi->compare(&seg_1, &seg_2) + mssi->compare(&seg_2, &seg_3) << endl;
+	//cout << mssi->compare(&seg_1, &seg_3) << endl;
 
 	chrono(mssi, &seg_1, &seg_2);
 	chrono(oce, &seg_1, &seg_2);
