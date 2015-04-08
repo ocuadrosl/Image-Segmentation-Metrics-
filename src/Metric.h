@@ -8,6 +8,11 @@
 #ifndef METRIC_H_
 #define METRIC_H_
 
+#include <vector>
+#include "SEG.h"
+
+using namespace std;
+
 typedef vector<vector<int> > reg_t; //seg row
 /*
  * to seg files
@@ -17,7 +22,7 @@ typedef vector<vector<int> > reg_t; //seg row
 class Metric
 {
 	public:
-		virtual float compare(SEG* __seg_1, SEG* __seg_2)=0; // return 1 to equal segs and 0 to very different
+		virtual float error(SEG* __seg_1, SEG* __seg_2)=0; // return 1 to equal segs and 0 to very different
 
 		virtual ~Metric()
 		{
@@ -33,7 +38,7 @@ class Metric
 
 		int I(reg_t __reg_1, reg_t __reg_2); //intersection between two regions
 		int U(reg_t __reg_1, reg_t __reg_2); //union between two regions
-		int n_pixels(reg_t __reg); //the number of pixes in __reg
+		int n_pixels(reg_t __reg); //number of pixes in __reg
 		float jaccard(reg_t __reg_1, reg_t __reg_2);
 
 };
@@ -72,8 +77,8 @@ int Metric::I(vector<vector<int> > __reg_1, vector<vector<int> > __reg_2)
 		{
 			if (__reg_1[i][0] == __reg_2[j][0]) //row verification
 			{
-				min_end = Util::min(__reg_1[i][2], __reg_2[j][2]); //
-				max_begin = Util::max(__reg_1[i][1], __reg_2[j][1]);
+				min_end = std::min(__reg_1[i][2], __reg_2[j][2]); //
+				max_begin = std::max(__reg_1[i][1], __reg_2[j][1]);
 
 				if (min_end >= max_begin)
 				{

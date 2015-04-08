@@ -7,58 +7,55 @@
 //============================================================================
 
 #include <iostream>
-#include "SEG.h"
 
-#include "OCE.h"
-#include "MSSI.h"
-#include "Arbelaez.h"
-#include "Metric.h"
-#include <sys/time.h>
-#include <ctime>
-#include <typeinfo>
+#include "metric.h"
+
+#include "Test.h"
 
 using namespace std;
 
-void chrono(Metric* __metric, SEG* __seg_1, SEG* __seg_2)
-{
-	float result;
-
-	double process_time;
-	timeval time;
-	gettimeofday(&time, NULL);
-	double t_0 = time.tv_sec + (time.tv_usec / 1000000.0);
-
-	result = __metric->compare(__seg_1, __seg_2);
-
-	gettimeofday(&time, NULL);
-	double t_1 = time.tv_sec + (time.tv_usec / 1000000.0);
-
-	process_time = t_1 - t_0;
-
-	cout << typeid(*__metric).name() << ": " << result << " time: " << process_time << endl;
-
-}
 
 int main()
 {
 	SEG seg_1, seg_2, seg_3;
-	seg_1.read("seg/frutas_1.seg");
-	seg_2.read("seg/frutas_2.seg");
-	seg_3.read("seg/61086.seg_1102");
+	seg_1.read("../seg/snake/snake_2.seg");
+	seg_2.read("../seg/snake/all_45.seg");
 
-	Metric *oce = new OCE();
-	MSSI * mssi = new MSSI();
-	Metric* arbelaez = new Arbelaez();
+	//seg_1.to_image("image.png");
+	//seg_1.print();
 
-	mssi->penality(0.1);
+	//Metric *oce = new OCE();
+	AOM * aom = new AOM();
+	//Metric* arbelaez = new Arbelaez();
 
-	//cout << mssi->compare(&seg_1, &seg_2) + mssi->compare(&seg_2, &seg_3) << endl;
-	//cout << mssi->compare(&seg_1, &seg_3) << endl;
+	//mssi->penality(0);
 
-	chrono(mssi, &seg_1, &seg_2);
-	chrono(oce, &seg_1, &seg_2);
-	chrono(arbelaez, &seg_1, &seg_2);
-	chrono(arbelaez, &seg_2, &seg_1);
+	Test test;
+
+	//test.chrono(mssi, &seg_1, &seg_2);
+	//test.chrono(mssi, &seg_1, &seg_3);
+	//test.chrono(arbelaez, &seg_1, &seg_2);
+	//test.chrono(arbelaez, &seg_2, &seg_1);
+	//test.chrono(oce, &seg_1, &seg_2);
+
+	//test.chrono(oce, &seg_1, &seg_2);
+	//test.chrono(arbelaez, &seg_1, &seg_2);
+	//test.chrono(arbelaez, &seg_2, &seg_1);
+
+	//test.classes(mssi, "human_segmentations/35010", "human_segmentations/65019");
+	//test.classes(arbelaez, "human_segmentations/35010", "human_segmentations/65019");
+	//test.classes(oce, "human_segmentations/35010", "human_segmentations/65019");
+
+	for (float i = 0; i <= 1.05; i = i + 0.05)
+	{
+		//cout << "**************** " << i << endl;
+		//cout << i << " ";
+		aom->penality(i);
+		//test.classes(mssi, "seg/square", "seg/square");
+		//test.chrono(mssi, &seg_1, &seg_2);
+		cout << aom->error(&seg_1, &seg_2) << "\t";
+
+	}
 
 	return 0;
 }

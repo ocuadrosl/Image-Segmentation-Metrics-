@@ -24,4 +24,7 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 src \
+src/CMakeFiles/main.dir \
+src/CMakeFiles/2.8.12.2/CompilerIdCXX \
+src/CMakeFiles/2.8.12.2/CompilerIdC \
 

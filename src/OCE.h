@@ -27,7 +27,7 @@ typedef vector<vector<int> > reg_t; //seg row
 class OCE: public Metric
 {
 	public:
-		float compare(SEG* __seg_1, SEG* __seg_2);
+		float error(SEG* __seg_1, SEG* __seg_2);
 		//string metric_name();
 
 	private:
@@ -37,11 +37,11 @@ class OCE: public Metric
 
 };
 
-float OCE::compare(SEG* __seg_1, SEG* __seg_2)
+float OCE::error(SEG* __seg_1, SEG* __seg_2)
 {
-	return Util::min(E(__seg_1, __seg_2), E(__seg_2, __seg_1));
-}
+	return std::min(E(__seg_1, __seg_2), E(__seg_2, __seg_1));
 
+}
 int OCE::bar_delta(int __input)
 {
 	return (__input == 0) ? 0 : 1;
@@ -90,7 +90,7 @@ float OCE::E(SEG* __seg_1, SEG* __seg_2)
 
 	}
 
-	return 1 - error;
+	return error;
 }
 
 #endif /* OCE_H_ */

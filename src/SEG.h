@@ -13,9 +13,13 @@
 #include <string>
 #include <fstream>
 
-#include "Util.h"
+#include <cv.h>
+#include <opencv2/opencv.hpp>
+#include <highgui.h>
+
 
 using namespace std;
+using namespace cv;
 
 typedef vector<vector<int> > reg_t; //region row
 
@@ -46,6 +50,7 @@ class SEG
 
 		int width();
 		int height();
+		void to_image(string __file_name);
 
 	private:
 		string _format; // {*ascii|binary} {*cr|map}
@@ -63,6 +68,33 @@ class SEG
 
 };
 
+void SEG::to_image(string __file_name)
+{
+
+	Mat image(_height, _width, CV_8UC3, Scalar(255, 255, 255));
+
+	for (unsigned i = 0; i < _segments.size(); i++)
+	{
+
+		for (unsigned j = 0; j < _segments[i].size(); j++)
+		{
+			image.at<Vec3b>(_segments[i][j][0], _segments[i][j][1])[0] = 0;
+			image.at<Vec3b>(_segments[i][j][0], _segments[i][j][2])[0] = 0;
+
+			image.at<Vec3b>(_segments[i][j][0], _segments[i][j][1])[1] = 0;
+			image.at<Vec3b>(_segments[i][j][0], _segments[i][j][2])[1] = 0;
+
+			image.at<Vec3b>(_segments[i][j][0], _segments[i][j][1])[2] = 0;
+			image.at<Vec3b>(_segments[i][j][0], _segments[i][j][2])[2] = 0;
+
+		}
+
+	}
+
+	imwrite(__file_name, image);
+
+}
+
 int SEG::width()
 {
 	return _width;
@@ -72,7 +104,6 @@ int SEG::height()
 {
 	return _height;
 }
-
 
 int SEG::size()
 {
@@ -85,7 +116,7 @@ void SEG::print()
 	{
 		for (unsigned j = 0; j < _segments[i].size(); j++)
 		{
-			cout << i <<" "<<_segments[i][j][0] << " " << _segments[i][j][1] << " " << _segments[i][j][2] << endl;
+			cout << i << " " << _segments[i][j][0] << " " << _segments[i][j][1] << " " << _segments[i][j][2] << endl;
 		}
 	}
 

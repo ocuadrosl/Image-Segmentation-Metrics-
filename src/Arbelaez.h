@@ -19,13 +19,16 @@
 class Arbelaez: public Metric
 {
 	public:
-		Arbelaez(){};
+		Arbelaez()
+		{
+		}
+		;
 
-		float compare(SEG* __seg_1, SEG* __seg_2);
+		float error(SEG* __seg_1, SEG* __seg_2);
 
 };
 
-float Arbelaez::compare(SEG* __seg_1, SEG* __seg_2)
+float Arbelaez::error(SEG* __seg_1, SEG* __seg_2)
 {
 
 	float covering = 0;
@@ -44,7 +47,7 @@ float Arbelaez::compare(SEG* __seg_1, SEG* __seg_2)
 
 	}
 
-	return covering / (float)(__seg_1->height()* __seg_1->width());
+	return 1 - (covering / (float) (__seg_1->height() * __seg_1->width()));
 
 }
 
