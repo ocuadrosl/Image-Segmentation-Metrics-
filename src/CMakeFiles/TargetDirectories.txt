@@ -1,1 +1,0 @@
-/home/oscar/Documentos/universidad/usp-icmc/proyectos/metrica/src/Segmentation_metrics/src/CMakeFiles/main.dir

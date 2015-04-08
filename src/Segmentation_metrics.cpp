@@ -17,7 +17,7 @@ using namespace std;
 
 int main()
 {
-	SEG seg_1, seg_2, seg_3;
+	SEG seg_1, seg_2;
 	seg_1.read("../seg/snake/snake_2.seg");
 	seg_2.read("../seg/snake/all_45.seg");
 
@@ -49,7 +49,6 @@ int main()
 	for (float i = 0; i <= 1.05; i = i + 0.05)
 	{
 		//cout << "**************** " << i << endl;
-		//cout << i << " ";
 		aom->penality(i);
 		//test.classes(mssi, "seg/square", "seg/square");
 		//test.chrono(mssi, &seg_1, &seg_2);
