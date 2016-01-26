@@ -27,7 +27,7 @@ typedef vector<vector<int> > reg_t; //seg row
 class OCE: public Metric
 {
 	public:
-		float error(SEG* __seg_1, SEG* __seg_2);
+		double error(SEG* __seg_1, SEG* __seg_2);
 		//string metric_name();
 
 	private:
@@ -37,7 +37,7 @@ class OCE: public Metric
 
 };
 
-float OCE::error(SEG* __seg_1, SEG* __seg_2)
+double OCE::error(SEG* __seg_1, SEG* __seg_2)
 {
 	return std::min(E(__seg_1, __seg_2), E(__seg_2, __seg_1));
 
@@ -51,17 +51,17 @@ int OCE::bar_delta(int __input)
 float OCE::E(SEG* __seg_1, SEG* __seg_2)
 {
 
-	float error = 0;
+	double error = 0;
 
 	for (int j = 0; j < __seg_1->size(); j++)
 	{
 
-		float jacc = 0;
+		double jacc = 0;
 		for (int i = 0; i < __seg_2->size(); i++)
 		{
 
-			float den = 0;
-			float num = 0;
+			double den = 0;
+			double num = 0;
 
 			for (int k = 0; k < __seg_2->size(); k++)
 			{
@@ -70,7 +70,7 @@ float OCE::E(SEG* __seg_1, SEG* __seg_2)
 
 			num = bar_delta(I((*__seg_1)[j], (*__seg_2)[i])) * n_pixels((*__seg_2)[i]);
 
-			float w_ij = num / den;
+			double w_ij = num / den;
 
 			jacc += (jaccard((*__seg_1)[j], (*__seg_2)[i]) * w_ij);
 
@@ -78,13 +78,13 @@ float OCE::E(SEG* __seg_1, SEG* __seg_2)
 
 		jacc = 1 - jacc;
 
-		float den = 0;
+		double den = 0;
 		for (int k = 0; k < __seg_1->size(); k++)
 		{
 			den += n_pixels((*__seg_1)[k]);
 		}
 
-		float w_j = n_pixels((*__seg_1)[j]) / den;
+		double w_j = n_pixels((*__seg_1)[j]) / den;
 
 		error = error + (jacc * w_j);
 

@@ -14,21 +14,22 @@
 
 using namespace std;
 
-
 int main()
 {
 	SEG seg_1, seg_2;
-	seg_1.read("../seg/snake/snake_2.seg");
-	seg_2.read("../seg/snake/all_45.seg");
+	seg_1.read("input/square_1.seg");
+	seg_2.read("input/square_2.seg");
 
 	//seg_1.to_image("image.png");
 	//seg_1.print();
 
 	//Metric *oce = new OCE();
-	AOM * aom = new AOM();
+	AOM aom;
 	//Metric* arbelaez = new Arbelaez();
 
 	//mssi->penality(0);
+
+
 
 	Test test;
 
@@ -46,15 +47,18 @@ int main()
 	//test.classes(arbelaez, "human_segmentations/35010", "human_segmentations/65019");
 	//test.classes(oce, "human_segmentations/35010", "human_segmentations/65019");
 
-	for (float i = 0; i <= 1.05; i = i + 0.05)
-	{
-		//cout << "**************** " << i << endl;
-		aom->penality(i);
-		//test.classes(mssi, "seg/square", "seg/square");
-		//test.chrono(mssi, &seg_1, &seg_2);
-		cout << aom->error(&seg_1, &seg_2) << "\t";
+	//for (float i = 0; i <= 1.05; i = i + 0.05)
+	//{
+	//cout << "**************** " << i << endl;
+	aom.penality(0.5);
+	//test.classes(mssi, "seg/square", "seg/square");
+	//test.chrono(mssi, &seg_1, &seg_2);
+	cout << aom.error(seg_1, seg_2) << "\t";
 
-	}
+	vector<vector<int> > reg_t;
+
+
+	//}
 
 	return 0;
 }

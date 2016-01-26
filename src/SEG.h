@@ -16,8 +16,6 @@
 using namespace std;
 
 
-typedef vector<vector<int> > reg_t; //region row
-
 /*
  * SEG files
  * 1: label
@@ -31,8 +29,11 @@ class SEG
 {
 	public:
 
+		typedef vector<vector<int> > region_t; //region row
+
 		SEG()
 		{
+			//<TODO> initialize member parameters
 		}
 		;
 
@@ -40,11 +41,12 @@ class SEG
 
 		void print();
 
-		reg_t &operator[](int __index);
-		int size();
+		region_t &operator[](int __index);
+		region_t operator[](int __index) const;
+		int size() const;
 
-		int width();
-		int height();
+		int width() const;
+		int height() const;
 		void to_image(string __file_name);
 
 	private:
@@ -59,21 +61,21 @@ class SEG
 		bool _invert; // {*0|1}	# image presented with pixel values inverted?
 		bool _flipflop; // {*0|1}	# image presented upside-down and backwards?
 
-		vector<reg_t> _segments;
+		vector<region_t> _segments;
 
 };
 
-int SEG::width()
+int SEG::width() const
 {
 	return _width;
 }
 
-int SEG::height()
+int SEG::height() const
 {
 	return _height;
 }
 
-int SEG::size()
+int SEG::size() const
 {
 	return _segments.size();
 
@@ -90,7 +92,14 @@ void SEG::print()
 
 }
 
-reg_t &SEG::operator [](int __index)
+SEG::region_t &SEG::operator [](int __index)
+{
+
+	return _segments[__index];
+
+}
+
+SEG::region_t SEG::operator [](int __index) const
 {
 
 	return _segments[__index];

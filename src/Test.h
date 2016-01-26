@@ -26,11 +26,13 @@ using namespace std;
  * Test functions
  *
  * */
-typedef vector<vector<float> > matrix_f; //matrix of floats
 
 class Test
 {
+
 	public:
+
+		typedef vector<vector<double> > matrix_d; //matrix of doubles	Test()
 		Test()
 		{
 		}
@@ -41,7 +43,7 @@ class Test
 		}
 		;
 
-		double chrono(Metric* __metric, SEG* __seg_1, SEG* __seg_2);
+		double chrono(Metric* __metric,  SEG __seg_1, SEG __seg_2);
 
 		/*compare all human segmentations between two images
 		 * todo exceptions
@@ -96,8 +98,9 @@ void Test::classes(Metric* __metric, string __directory_1, string __directory_2)
 	files_1 = directory_files(__directory_1);
 	files_2 = directory_files(__directory_2);
 
-	vector<float> row(files_2.size(), -1);
-	matrix_f distances(files_1.size(), row);
+	vector<double> row(files_2.size(), -1);
+
+	matrix_d distances(files_1.size(), row);
 
 	SEG seg_1, seg_2;
 
@@ -114,7 +117,7 @@ void Test::classes(Metric* __metric, string __directory_1, string __directory_2)
 
 			seg_2.read(files_2[j]);
 
-			distances[i][j] = __metric->error(&seg_1, &seg_2);
+			distances[i][j] = __metric->error(seg_1, seg_2);
 
 			cout << distances[i][j] << " ";
 
@@ -127,9 +130,9 @@ void Test::classes(Metric* __metric, string __directory_1, string __directory_2)
 
 }
 
-double Test::chrono(Metric* __metric, SEG* __seg_1, SEG* __seg_2)
+double Test::chrono(Metric* __metric,  SEG __seg_1, SEG __seg_2)
 {
-	float result;
+	double result;
 
 	double process_time;
 	timeval time;

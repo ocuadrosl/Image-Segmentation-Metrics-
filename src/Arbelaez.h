@@ -24,11 +24,11 @@ class Arbelaez: public Metric
 		}
 		;
 
-		float error(SEG* __seg_1, SEG* __seg_2);
+		double error(SEG* __seg_1, SEG* __seg_2);
 
 };
 
-float Arbelaez::error(SEG* __seg_1, SEG* __seg_2)
+double Arbelaez::error(SEG* __seg_1, SEG* __seg_2)
 {
 
 	float covering = 0;

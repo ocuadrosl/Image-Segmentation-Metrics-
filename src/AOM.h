@@ -14,41 +14,49 @@
 #include <algorithm>
 
 using namespace std;
+
 /*
+ * Oscar
  * An Adaptable Error Measure for Image Segmentation Evaluation
  * AOM
- * Oscar
- *
+ * *
  */
-
-typedef vector<vector<float> > matrix_t;
 
 class AOM: public Metric
 {
 	public:
 
+		typedef vector<vector<double> > matrix_t;
+
 		AOM();
+		~AOM();
 
-		float error(SEG* __seg_1, SEG* __seg_2);
+		double error(const SEG & __seg_1, const SEG & __seg_2);
 
-		void print_matrix();
+		void print_matrix() const;
 
-		void penality(float __penality);
+		void penality(const double & __penality);
 
 	private:
 		matrix_t _intersections;
 
-		vector<float> _over_segmentations; //to consider over segmentation
-		float _penalty; // to penalize over segmentation
+		vector<double> _over_segmentations; //to consider over segmentation
+		double _penalty; // to penalize over segmentation
 
-		void intersection_matrix(SEG* __seg_1, SEG* __seg_2);
-		void summatory(matrix_t __intersections, vector<float> _over_segmentations, float& __sum);
+		void intersection_matrix(const SEG & __seg_1, const SEG & __seg_2);
+		void summatory(matrix_t __intersections, vector<double> _over_segmentations, double& __sum);
 
 		int _image_size;
 
 };
 
-void AOM::summatory(matrix_t __intersections, vector<float> __over_segmentations, float& __sum)
+AOM::~AOM()
+{
+	matrix_t().swap(_intersections);
+	vector<double>().swap(_over_segmentations);
+}
+
+void AOM::summatory(matrix_t __intersections, vector<double> __over_segmentations, double& __sum)
 {
 
 	if (__intersections.size() <= 0)
@@ -56,7 +64,7 @@ void AOM::summatory(matrix_t __intersections, vector<float> __over_segmentations
 		return;
 	}
 
-	float __largest = 0;
+	double __largest = 0;
 
 	unsigned i_flag = 0;
 	unsigned j_flag = 0;
@@ -75,8 +83,6 @@ void AOM::summatory(matrix_t __intersections, vector<float> __over_segmentations
 
 		}
 	}
-
-	//cout << __largest << " " << _over_segmentations[i_flag] << endl;
 
 	if (__largest <= 0)
 	{
@@ -99,30 +105,29 @@ void AOM::summatory(matrix_t __intersections, vector<float> __over_segmentations
 
 }
 
-void AOM::intersection_matrix(SEG* __seg_1, SEG* __seg_2)
+void AOM::intersection_matrix(const SEG & __seg_1, const SEG & __seg_2)
 {
 
-	_intersections.resize(__seg_1->size());
+	_intersections.resize(__seg_1.size());
 
 	//_over_segmentations.clear();
-	_over_segmentations.resize(__seg_1->size(), 0);
+	_over_segmentations.resize(__seg_1.size(), 0);
 
-	for (int i = 0; i < __seg_1->size(); i++)
+	for (int i = 0; i < __seg_1.size(); i++)
 	{
-		_intersections[i].resize(__seg_2->size());
+		_intersections[i].resize(__seg_2.size());
 		_over_segmentations[i] = 0;
 	}
 
-	for (int i = 0; i < __seg_1->size(); i++)
+	for (int i = 0; i < __seg_1.size(); i++)
 	{
-		for (int j = 0; j < __seg_2->size(); j++)
+		for (int j = 0; j < __seg_2.size(); j++)
 		{
-			_intersections[i][j] = I((*__seg_1)[i], (*__seg_2)[j]);
+			_intersections[i][j] = I(__seg_1[i], __seg_2[j]);
 
 			if (_intersections[i][j] > 0)
 			{
 				_over_segmentations[i] += _penalty;
-
 			}
 
 		}
@@ -148,12 +153,12 @@ AOM::AOM()
 
 }
 
-void AOM::penality(float __penality)
+void AOM::penality(const double & __penality)
 {
 	_penalty = __penality;
 }
 
-void AOM::print_matrix()
+void AOM::print_matrix() const
 {
 	for (unsigned i = 0; i < _intersections.size(); i++)
 	{
@@ -168,12 +173,12 @@ void AOM::print_matrix()
 
 }
 
-float AOM::error(SEG* __seg_1, SEG* __seg_2)
+double AOM::error(const SEG & __seg_1, const SEG & __seg_2)
 {
 
-	_image_size = __seg_1->width() * __seg_1->height();
+	_image_size = __seg_1.width() * __seg_1.height();
 
-	if (__seg_1->size() > __seg_2->size())
+	if (__seg_1.size() > __seg_2.size())
 	{
 		intersection_matrix(__seg_2, __seg_1);
 	}
@@ -182,11 +187,11 @@ float AOM::error(SEG* __seg_1, SEG* __seg_2)
 		intersection_matrix(__seg_1, __seg_2);
 	}
 
-	float sum = 0;
+	double sum = 0;
 
 	summatory(_intersections, _over_segmentations, sum);
 
-	return 1 - (sum / (float) _image_size);
+	return 1 - (sum / (double) _image_size);
 
 }
 
