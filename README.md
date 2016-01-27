@@ -7,7 +7,9 @@ ocuadros@icmc.usp.br
 This project aims to implement object-oriented measures to quantify the quality of  image segmentation algorithms. Currently there are three implemented measures: 
 
 1) Alberlaez Error Measure (AEM), Arbelaez et. al. (2009)
+
 2) Object-level Consistency Error (OCE), Polak et. al. (2009) 
+
 3) An Adjustable Error Measure for Image Segmentation Evaluation (AOM), Oscar Cuadros Linares et. al. (2015): This error measure outperforms both AEM and OCE measures, not only terms of accuracy but also in time processing. Also, AOM satisfies the three axioms of metric spaces.        
 
 Usage:
