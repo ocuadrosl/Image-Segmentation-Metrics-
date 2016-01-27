@@ -1,8 +1,18 @@
 /*
- * Test.h
+ * Copyright (C) 2016  Oscar Alonso Cuadros Linares
  *
- *  Created on: 12/3/2015
- *      Author: oscar
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef TEST_H_
@@ -43,7 +53,7 @@ class Test
 		}
 		;
 
-		double chrono(Metric* __metric,  SEG __seg_1, SEG __seg_2);
+		double chrono(Metric* __metric, SEG __seg_1, SEG __seg_2);
 
 		/*compare all human segmentations between two images
 		 * todo exceptions
@@ -130,7 +140,7 @@ void Test::classes(Metric* __metric, string __directory_1, string __directory_2)
 
 }
 
-double Test::chrono(Metric* __metric,  SEG __seg_1, SEG __seg_2)
+double Test::chrono(Metric* __metric, SEG __seg_1, SEG __seg_2)
 {
 	double result;
 

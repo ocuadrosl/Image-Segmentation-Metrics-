@@ -1,10 +1,19 @@
-//============================================================================
-// Name        : Segmentation_metrics.cpp
-// Author      : Oscar
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
+/*
+ * Copyright (C) 2016  Oscar Alonso Cuadros Linares
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <iostream>
 
@@ -20,8 +29,6 @@ int main()
 	seg_1.read("input/square_1.seg");
 	seg_2.read("input/square_2.seg");
 
-	//seg_1.to_image("image.png");
-	//seg_1.print();
 
 	//Metric *oce = new OCE();
 	AOM aom;

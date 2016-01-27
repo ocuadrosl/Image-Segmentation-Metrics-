@@ -1,8 +1,18 @@
 /*
- * AOM.h
+ * Copyright (C) 2016  Oscar Alonso Cuadros Linares
  *
- *  Created on: 19/2/2015
- *      Author: oscar
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef AOM_H_
@@ -44,7 +54,7 @@ class AOM: public Metric
 		double _penalty; // to penalize over segmentation
 
 		void intersection_matrix(const SEG & __seg_1, const SEG & __seg_2);
-		void summatory(matrix_t __intersections, vector<double> _over_segmentations, double& __sum);
+		void summatory(matrix_t& __intersections, vector<double>& _over_segmentations, double& __sum);
 
 		int _image_size;
 
@@ -56,7 +66,7 @@ AOM::~AOM()
 	vector<double>().swap(_over_segmentations);
 }
 
-void AOM::summatory(matrix_t __intersections, vector<double> __over_segmentations, double& __sum)
+void AOM::summatory(matrix_t& __intersections, vector<double>& __over_segmentations, double& __sum)
 {
 
 	if (__intersections.size() <= 0)
