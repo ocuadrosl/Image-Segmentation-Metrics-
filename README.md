@@ -12,10 +12,10 @@ This project aims to implement object-oriented measures to quantify the quality 
 
 Usage:
 
-This project is implemented in C++, you only have to include the header file "Metric.h" into your own project. Besides, we implemented a class to reading and writting SEG files and  a class to measure the processing time. See the example below:
+This project is implemented in C++, you only have to include the header file "metric.h" into your own project. Besides, we implemented a class to reading and writting SEG files and  a class to measure the processing time. See the example below:
 
 
-#include "Metric.h"
+#include "metric.h"
 
 
 int main()
