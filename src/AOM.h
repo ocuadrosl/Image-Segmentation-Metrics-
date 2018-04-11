@@ -34,39 +34,39 @@ using namespace std;
 
 class AOM: public Metric
 {
-	public:
+public:
 
-		typedef vector<vector<double> > matrix_t;
+	typedef vector<vector<double> > matrixType;
 
-		AOM();
-		~AOM();
+	AOM();
+	~AOM();
 
-		double error(const SEG & __seg_1, const SEG & __seg_2);
+	double error(const SEG & __seg_1, const SEG & __seg_2);
 
-		void print_matrix() const;
+	void print_matrix() const;
 
-		void penality(const double & __penality);
+	void penality(const double & __penality);
 
-	private:
-		matrix_t _intersections;
+private:
+	matrixType _intersections;
 
-		vector<double> _over_segmentations; //to consider over segmentation
-		double _penalty; // to penalize over segmentation
+	vector<double> _over_segmentations; //to consider over segmentation
+	double _penalty; // to penalize over segmentation
 
-		void intersection_matrix(const SEG & __seg_1, const SEG & __seg_2);
-		void summatory(matrix_t& __intersections, vector<double>& _over_segmentations, double& __sum);
+	void intersection_matrix(const SEG & __seg_1, const SEG & __seg_2);
+	void summatory(matrixType& __intersections, vector<double>& _over_segmentations, double& __sum);
 
-		int _image_size;
+	int _image_size;
 
 };
 
 AOM::~AOM()
 {
-	matrix_t().swap(_intersections);
+	matrixType().swap(_intersections);
 	vector<double>().swap(_over_segmentations);
 }
 
-void AOM::summatory(matrix_t& __intersections, vector<double>& __over_segmentations, double& __sum)
+void AOM::summatory(matrixType& __intersections, vector<double>& __over_segmentations, double& __sum)
 {
 
 	if (__intersections.size() <= 0)
