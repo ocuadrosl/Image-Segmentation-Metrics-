@@ -25,18 +25,15 @@ using namespace std;
 
 int main()
 {
-	SEG seg_1, seg_2, seg3;
+	SEG seg_1, seg_2;
 	seg_1.read("input/square_1.seg");
 	seg_2.read("input/square_2.seg");
-
 
 	//Metric *oce = new OCE();
 	AOM aom;
 	//Metric* arbelaez = new Arbelaez();
 
 	//mssi->penality(0);
-
-
 
 	Test test;
 
@@ -60,10 +57,9 @@ int main()
 	aom.penality(0.5);
 	//test.classes(mssi, "seg/square", "seg/square");
 	//test.chrono(mssi, &seg_1, &seg_2);
-	cout << aom.error(seg_1, seg_2) << "\t";
+	cout << aom.error(seg_1, seg_2) << std::endl;
 
 	vector<vector<int> > reg_t;
-
 
 	//}
 
