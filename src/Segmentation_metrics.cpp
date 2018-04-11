@@ -25,7 +25,7 @@ using namespace std;
 
 int main()
 {
-	SEG seg_1, seg_2;
+	SEG seg_1, seg_2, seg3;
 	seg_1.read("input/square_1.seg");
 	seg_2.read("input/square_2.seg");
 
