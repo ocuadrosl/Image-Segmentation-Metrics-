@@ -5,7 +5,7 @@ Released under the GPL license 3 http://www.gnu.org/licenses/
 written by: Oscar Alonso Cuadros Linares
 ocuadros@icmc.usp.br
 
-This project aims to implement object-oriented measures to quantitatively compare segmentation of images. Currently, there are three implemented measures: 
+This project aims to implement object-oriented measures to quantitatively compare segmentation files (.seg). Currently, there are three implemented measures: 
 
 1) Alberlaez Error Measure (AEM), Arbelaez et. al. (2009)
 
