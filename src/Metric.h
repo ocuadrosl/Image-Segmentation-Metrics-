@@ -25,76 +25,81 @@ using namespace std;
 
 /*
  * to seg files
- * oscar
+ *
  * */
 
 class Metric
 {
 
-	public:
+public:
 
-		typedef typename SEG::region_t region_t; //seg row
+	typedef typename SEG::region_t regionType; //seg row
 
-		/* This functions have to return 1 to equal
-		 * segmentations and 0 to totally different
-		 */
-		virtual double error(const SEG & __seg_1, const SEG & __seg_2)=0;
+	/*
+	 * main function
+	 * */
+	virtual double compute(const SEG & seg1, const SEG & seg2)=0;
 
-		virtual ~Metric()
-		{
-		}
-		;
+	virtual ~Metric()
+	{
+	}
+	;
 
-		Metric()
-		{
-		}
-		;
+	Metric()
+	{
+	}
+	;
 
-	protected:
+protected:
 
-		int I(const region_t & __reg_1, const region_t & __reg_2) const; //intersection between two regions
-		int U(const region_t & __reg_1, const region_t & __reg_2) const; //union between two regions
-		int n_pixels(const region_t & __reg) const; //number of pixes in __reg
-		double jaccard(const region_t & __reg_1, const region_t & __reg_2) const;
+	inline int I(const regionType & reg1, const regionType & reg2) const; //intersection between two regions
+	inline int U(const regionType & reg1, const regionType & reg2) const; //union between two regions
+	inline int getNumberOfPixels(const regionType & region) const; //number of pixes in __reg
+
+	// region oriented jaccard
+	inline double jaccard(const regionType & reg1, const regionType & reg2) const;
 
 };
-
-double Metric::jaccard(const region_t & __reg_1, const region_t & __reg_2) const
+/*
+ * Jaccard for only two regions
+ *
+ * */
+double Metric::jaccard(const regionType & reg1, const regionType & reg2) const
 {
 
-	double den = U(__reg_1, __reg_2);
+	double den = U(reg1, reg2);
 
-	return (den == 0) ? 1.0 : (double) I(__reg_1, __reg_2) / den;
+	return (den == 0) ? 1.0 : static_cast<double>(I(reg1, reg2)) / den;
 
 }
 
-int Metric::n_pixels(const region_t & __reg) const
+int Metric::getNumberOfPixels(const regionType & region) const
 {
-	int size = 0;
-	for (unsigned i = 0; i < __reg.size(); i++)
+	int numPixels = 0;
+	for (unsigned i = 0; i < region.size(); ++i)
 	{
-		size += ((__reg[i][2] - __reg[i][1]) + 1);
+		numPixels += ((region[i][2] - region[i][1]) + 1);
 	}
-	return size;
+	return numPixels;
 }
 
-int Metric::I(const region_t& __reg_1, const region_t& __reg_2) const
+int Metric::I(const regionType& reg1, const regionType& reg2) const
 {
 
 	int intersection = 0;
 
-	/*auriliary declarations*/
+	/*Auxiliary declarations*/
 	int min_end = 0;
 	int max_begin = 0;
 
-	for (unsigned i = 0; i < __reg_1.size(); i++)
+	for (unsigned i = 0; i < reg1.size(); ++i)
 	{
-		for (unsigned j = 0; j < __reg_2.size(); j++)
+		for (unsigned j = 0; j < reg2.size(); ++j)
 		{
-			if (__reg_1[i][0] == __reg_2[j][0]) //row verification
+			if (reg1[i][0] == reg2[j][0]) //row verification
 			{
-				min_end = std::min(__reg_1[i][2], __reg_2[j][2]);
-				max_begin = std::max(__reg_1[i][1], __reg_2[j][1]);
+				min_end = std::min(reg1[i][2], reg2[j][2]);
+				max_begin = std::max(reg1[i][1], reg2[j][1]);
 
 				if (min_end >= max_begin)
 				{
@@ -109,9 +114,15 @@ int Metric::I(const region_t& __reg_1, const region_t& __reg_2) const
 	return intersection;
 }
 
-int Metric::U(const region_t & __reg_1, const region_t & __reg_2) const
+/*
+ * NOTICE: this function does not verify if the intersection between seg1 and seg2 is greater than 0
+ *
+ *
+ * */
+
+int Metric::U(const regionType & reg1, const regionType & reg2) const
 {
-	return (n_pixels(__reg_1) + n_pixels(__reg_2)) - I(__reg_1, __reg_2);
+	return (getNumberOfPixels(reg1) + getNumberOfPixels(reg2)) - I(reg1, reg2);
 }
 
 #endif /* METRIC_H_ */
