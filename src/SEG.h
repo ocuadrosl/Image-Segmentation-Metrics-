@@ -25,7 +25,6 @@
 
 using namespace std;
 
-
 /*
  * SEG files
  * 1: label
@@ -37,43 +36,50 @@ using namespace std;
  */
 class SEG
 {
-	public:
+public:
 
-		typedef vector<vector<int> > region_t; //region row
+	typedef vector<vector<int> > region_t; //region row
 
-		SEG()
-		{
-			//<TODO> initialize member parameters
-		}
-		;
+	SEG();
 
-		void read(string __file_name);
+	void read(string __file_name);
 
-		void print();
+	void print();
 
-		region_t &operator[](int __index);
-		region_t operator[](int __index) const;
-		int size() const;
+	region_t &operator[](int __index);
+	region_t operator[](int __index) const;
+	int size() const;
 
-		int width() const;
-		int height() const;
-		void to_image(string __file_name);
+	int width() const;
+	int height() const;
+	void to_image(string __file_name);
 
-	private:
-		string _format; // {*ascii|binary} {*cr|map}
-		string _date; // <date string>
-		string _image_name; // <int>	# image ID name
-		string _user_id; // <int>	# user ID number
-		int _width; // <int>	# width of image
-		int _height; // <int>	# height of image
-		int _segments_number; // <int>	# number of segments
-		bool _gray; // {*0|1}	# image presented in grayscale?
-		bool _invert; // {*0|1}	# image presented with pixel values inverted?
-		bool _flipflop; // {*0|1}	# image presented upside-down and backwards?
+private:
+	string _format; // {*ascii|binary} {*cr|map}
+	string _date; // <date string>
+	string _image_name; // <int>	# image ID name
+	string _user_id; // <int>	# user ID number
+	int _width; // <int>	# width of image
+	int _height; // <int>	# height of image
+	int numberOfSegments; // <int>	# number of segments
+	bool _gray; // {*0|1}	# image presented in grayscale?
+	bool _invert; // {*0|1}	# image presented with pixel values inverted?
+	bool _flipflop; // {*0|1}	# image presented upside-down and backwards?
 
-		vector<region_t> _segments;
+	vector<region_t> _segments;
 
 };
+
+SEG::SEG()
+{
+	_width = 0; // <int>	# width of image
+	_height = 0; // <int>	# height of image
+	numberOfSegments = 0; // <int>	# number of segments
+	_gray = 0; // {*0|1}	# image presented in grayscale?
+	_invert = 0; // {*0|1}	# image presented with pixel values inverted?
+	_flipflop = 0;
+
+}
 
 int SEG::width() const
 {
@@ -92,9 +98,9 @@ int SEG::size() const
 }
 void SEG::print()
 {
-	for (unsigned i = 0; i < _segments.size(); i++)
+	for (unsigned i = 0; i < _segments.size(); i++) //segments
 	{
-		for (unsigned j = 0; j < _segments[i].size(); j++)
+		for (unsigned j = 0; j < _segments[i].size(); j++) //regions
 		{
 			cout << i << " " << _segments[i][j][0] << " " << _segments[i][j][1] << " " << _segments[i][j][2] << endl;
 		}
@@ -141,7 +147,7 @@ void SEG::read(string __file_name)
 	file >> _height;
 
 	file >> trash;
-	file >> _segments_number;
+	file >> numberOfSegments;
 
 	//trash data
 	file >> trash;
@@ -152,25 +158,26 @@ void SEG::read(string __file_name)
 	file >> trash;
 	file >> trash;
 
-	_segments.resize(_segments_number);
+	_segments.resize(numberOfSegments);
 	/*auxiliary declarations*/
 
-	int seg_pos;
+	int segIndex;
 	int row;
 	int col_0;
 	int col_1;
 	while (file.good())
 	{
-		file >> seg_pos;
+		file >> segIndex;
 		file >> row;
 		file >> col_0;
 		file >> col_1;
 		if (file.good())
 		{
-			_segments[seg_pos].resize(_segments[seg_pos].size() + 1);
-			_segments[seg_pos][_segments[seg_pos].size() - 1].push_back(row);
-			_segments[seg_pos][_segments[seg_pos].size() - 1].push_back(col_0);
-			_segments[seg_pos][_segments[seg_pos].size() - 1].push_back(col_1);
+			_segments[segIndex].resize(_segments[segIndex].size() + 1); //3
+
+			_segments[segIndex][_segments[segIndex].size() - 1].push_back(row);
+			_segments[segIndex][_segments[segIndex].size() - 1].push_back(col_0);
+			_segments[segIndex][_segments[segIndex].size() - 1].push_back(col_1);
 		}
 
 	}
