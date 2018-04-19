@@ -22,5 +22,6 @@
 #include "Metric.h"
 #include "OCE.h"
 #include "Arbelaez.h"
+#include "Jaccard.h"
 
 #endif /* METRIC_H_ */
