@@ -29,6 +29,8 @@
 
 #include <dirent.h>
 
+#include <algorithm>
+
 using namespace std;
 
 /*
@@ -70,7 +72,7 @@ class Test
 
 vector<string> Test::directory_files(string __directory)
 {
-	vector<string> files;
+	std::vector<std::string> files;
 
 	DIR *dp;
 	struct dirent *dirp;
@@ -96,7 +98,7 @@ vector<string> Test::directory_files(string __directory)
 	}
 	closedir(dp);
 
-	sort(files.begin(), files.end());
+	std::sort(files.begin(), files.end());
 	return files;
 
 }
@@ -104,11 +106,11 @@ vector<string> Test::directory_files(string __directory)
 void Test::classes(Metric* __metric, string __directory_1, string __directory_2)
 {
 
-	vector<string> files_1, files_2;
+	std::vector<string> files_1, files_2;
 	files_1 = directory_files(__directory_1);
 	files_2 = directory_files(__directory_2);
 
-	vector<double> row(files_2.size(), -1);
+	std::vector<double> row(files_2.size(), -1);
 
 	matrix_d distances(files_1.size(), row);
 
@@ -127,7 +129,7 @@ void Test::classes(Metric* __metric, string __directory_1, string __directory_2)
 
 			seg_2.read(files_2[j]);
 
-			distances[i][j] = __metric->error(seg_1, seg_2);
+			distances[i][j] = __metric->compute(seg_1, seg_2);
 
 			cout << distances[i][j] << " ";
 
@@ -149,7 +151,7 @@ double Test::chrono(Metric* __metric, SEG __seg_1, SEG __seg_2)
 	gettimeofday(&time, NULL);
 	double t_0 = time.tv_sec + (time.tv_usec / 1000000.0);
 
-	result = __metric->error(__seg_1, __seg_2);
+	result = __metric->compute(__seg_1, __seg_2);
 
 	gettimeofday(&time, NULL);
 	double t_1 = time.tv_sec + (time.tv_usec / 1000000.0);
