@@ -23,32 +23,19 @@ Those metrics are implemented in C++, you just should include the header file "m
 
 int main()
 {
-
-	SEG seg_1, seg_2;
-	seg_1.read("input/square_1.seg");
-	seg_2.read("input/square_2.seg");
+	SEG seg1, seg2;
+	seg1.read("segmentation1.seg");
+	seg2.read("segmentation2.seg");
 
 	AOM aom;
-	aom.penality(0.5);
-	std::cout << aom.error(seg_1, seg_2) << std::endl;
+	aom.setPenality(0.5);
+	Jaccard jaccard;
+	Dice dice;
 
-	/*****************/
-
-	Metric *oce = new OCE();
-	Metric* arbelaez = new Arbelaez();
-
-	Test test;
-
-	test.chrono(oce, seg_1, seg_2);
-	test.chrono(arbelaez, seg_1, seg_2);
-
-	delete oce;
-	delete arbelaez;
-
+	std::cout << aom.compute(seg1, seg2) << std::endl;
+	std::cout << jaccard.compute(seg1, seg2) << std::endl;
+	std::cout << dice.compute(seg1, seg2) << std::endl;
+	
 	return 0;
 }
  
-TODO:
-
-
-
