@@ -37,6 +37,15 @@ public:
 
 };
 
+/*
+ * DICE coefficiet for all regions, it is assumed that seg2 is placed over seg1,
+ * Region labels are not considered
+ * Using equation sum( 2*intersection(seg1,seg2))/sum(|seg1|+|seg2|)
+ * If intersection between two regions, then union is zero.
+ * 0 <= DICE <= 1
+ *
+ * */
+
 double Dice::compute(const SEG & seg1, const SEG & seg2)
 {
 	double similarity = 0;
