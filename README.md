@@ -23,6 +23,7 @@ Those metrics are implemented in C++, you just should include the header file "m
 
 int main()
 {
+	
 	SEG seg1, seg2;
 	seg1.read("segmentation1.seg");
 	seg2.read("segmentation2.seg");
