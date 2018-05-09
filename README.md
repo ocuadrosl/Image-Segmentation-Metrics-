@@ -15,7 +15,9 @@ This project aims to implement object-oriented measures to quantitatively compar
 
 Usage:
 
-Those metrics are implemented in C++, you just should include the header file "metric.h" in your own project. Moreover, we implemented a class to read and write SEG files and a class to measure the processing time. See the example below:
+The header file "metric.h" must be included in your own project.
+Segmentation files ".seg" can be read using the SEG object.
+See the example bellow: 
 
 
 #include "metric.h"
