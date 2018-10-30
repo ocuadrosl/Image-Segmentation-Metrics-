@@ -23,5 +23,6 @@
 #include "OCE.h"
 #include "Arbelaez.h"
 #include "Jaccard.h"
+#include "Dice.h"
 
 #endif /* METRIC_H_ */

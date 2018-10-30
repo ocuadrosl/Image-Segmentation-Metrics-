@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/Segmentations_metrics.dir/home/oscar/src/Image-Segmentation-Metrics-/src/Segmentation_metrics.cpp.o  -o Segmentations_metrics -rdynamic 

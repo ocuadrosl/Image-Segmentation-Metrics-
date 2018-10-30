@@ -1,0 +1,3 @@
+/home/oscar/src/Image-Segmentation-Metrics-/build/CMakeFiles/rebuild_cache.dir
+/home/oscar/src/Image-Segmentation-Metrics-/build/CMakeFiles/edit_cache.dir
+/home/oscar/src/Image-Segmentation-Metrics-/build/CMakeFiles/Segmentations_metrics.dir

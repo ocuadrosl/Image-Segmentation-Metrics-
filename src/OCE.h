@@ -75,10 +75,10 @@ float OCE::E(SEG* __seg_1, SEG* __seg_2)
 
 			for (int k = 0; k < __seg_2->size(); k++)
 			{
-				den += bar_delta(I((*__seg_1)[j], (*__seg_2)[k])) * n_pixels((*__seg_2)[k]);
+				den += bar_delta(I((*__seg_1)[j], (*__seg_2)[k])) * getNumberOfPixels((*__seg_2)[k]);
 			}
 
-			num = bar_delta(I((*__seg_1)[j], (*__seg_2)[i])) * n_pixels((*__seg_2)[i]);
+			num = bar_delta(I((*__seg_1)[j], (*__seg_2)[i])) * getNumberOfPixels((*__seg_2)[i]);
 
 			double w_ij = num / den;
 
@@ -91,10 +91,10 @@ float OCE::E(SEG* __seg_1, SEG* __seg_2)
 		double den = 0;
 		for (int k = 0; k < __seg_1->size(); k++)
 		{
-			den += n_pixels((*__seg_1)[k]);
+			den += getNumberOfPixels((*__seg_1)[k]);
 		}
 
-		double w_j = n_pixels((*__seg_1)[j]) / den;
+		double w_j = getNumberOfPixels((*__seg_1)[j]) / den;
 
 		error = error + (jacc * w_j);
 

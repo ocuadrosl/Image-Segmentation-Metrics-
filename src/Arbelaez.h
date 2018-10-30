@@ -53,7 +53,7 @@ double Arbelaez::error(SEG* __seg_1, SEG* __seg_2)
 			overlap = (jacc > overlap) ? jacc : overlap;
 
 		}
-		covering += n_pixels((*__seg_2)[i]) * overlap;
+		covering += getNumberOfPixels((*__seg_2)[i]) * overlap;
 
 	}
 
