@@ -1,0 +1,14 @@
+/build/
+build/
+/input/
+input/
+/output/
+output/
+/utils/
+utils/
+.cproject
+.project
+/.settings/
+.settings/
+/.pydevproject/
+.pydevproject
